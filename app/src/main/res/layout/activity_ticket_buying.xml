@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorApplicationDarkBlue"
+    tools:context=".activities.TicketBuyingActivity">
+
+    <TextView
+        android:textSize="20sp"
+        android:textColor="@color/colorWhite"
+        android:id="@+id/ticketBuyingTopTitle"
+        android:layout_margin="20sp"
+        android:text="KUPNO BILETU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/ticketBuyingTopTitle"
+        android:layout_width="match_parent"
+        android:layout_height="540dp">
+
+        <androidx.cardview.widget.CardView
+
+            android:id="@+id/ticketBuyingTopCardView"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="520dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/ticketBuyingRideDetailsTopTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <ImageView
+                        android:layout_toLeftOf="@+id/ticketBuyingRideDetailsTopTitleTxt"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/colorBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/ticketBuyingRideDetailsTopTitleTxt"
+                        android:layout_centerInParent="true"
+                        android:textSize="20sp"
+                        android:text="Dane przejazdu"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_toRightOf="@+id/ticketBuyingRideDetailsTopTitleTxt"
+                        android:layout_marginRight="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/colorBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:transitionName="ticketBuyingRideCityFromNameTN"
+                    android:id="@+id/ticketBuingRideCityFromName"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:text="Mielec"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@id/ticketBuyingRideDetailsTopTitle"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/ticketBuingRideCityPauseBetweenNames"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:text=" - "
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@id/ticketBuingRideCityFromName"
+                    android:layout_below="@id/ticketBuyingRideDetailsTopTitle"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="ticketBuyingRideCityToNameTN"
+                    android:id="@+id/ticketBuingRideCityToName"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:text="Rzeszów"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@id/ticketBuingRideCityPauseBetweenNames"
+                    android:layout_below="@id/ticketBuyingRideDetailsTopTitle"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="ticketBuyingRideCityRideDateTN"
+                    android:id="@+id/ticketBuingRideCityRideDate"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:text="22.09.2020"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_below="@id/ticketBuingRideCityFromName"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="ticketBuyingRideCityRideTimeTN"
+                    android:id="@+id/ticketBuingRideCityRideTime"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:text="17:15"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_below="@id/ticketBuingRideCityRideDate"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="ticketBuyingRideCityRidePriceTN"
+                    android:id="@+id/ticketBuingRideCityRidePrice"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:layout_alignParentRight="true"
+                    android:text="10.50 zł"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_below="@id/ticketBuingRideCityRideDate"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/ticketBuingRideCityRidePrice"
+                    android:id="@+id/ticketBuyingRideDetailsOwnerDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <ImageView
+                        android:layout_toLeftOf="@+id/ticketBuyingRideDetailsOwnerDetailsTitle"
+                        android:layout_marginLeft="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/colorBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:id="@+id/ticketBuyingRideDetailsOwnerDetailsTitle"
+                        android:layout_centerInParent="true"
+                        android:textSize="20sp"
+                        android:text="Twoje dane"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <ImageView
+                        android:layout_toRightOf="@+id/ticketBuyingRideDetailsOwnerDetailsTitle"
+                        android:layout_marginRight="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@color/colorBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_below="@+id/ticketBuyingRideDetailsOwnerDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <EditText
+                        android:nextFocusUp="@id/ticketBuyingNameEditText"
+                        android:nextFocusLeft="@id/ticketBuyingNameEditText"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Twoje imię"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/ticketBuyingNameEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"/>
+
+                    <EditText
+                        android:nextFocusUp="@id/ticketBuyingSurnameEditText"
+                        android:nextFocusLeft="@id/ticketBuyingSurnameEditText"
+                        android:layout_below="@id/ticketBuyingNameEditText"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Twoje nazwisko"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/ticketBuyingSurnameEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"/>
+
+                    <EditText
+                        android:nextFocusUp="@id/ticketBuyingFirstEmailEditText"
+                        android:nextFocusLeft="@id/ticketBuyingFirstEmailEditText"
+                        android:layout_below="@id/ticketBuyingSurnameEditText"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Twój email"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/ticketBuyingFirstEmailEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"/>
+
+                    <EditText
+                        android:nextFocusUp="@id/ticketBuyingSecondEmailEditText"
+                        android:nextFocusLeft="@id/ticketBuyingSecondEmailEditText"
+                        android:layout_below="@id/ticketBuyingFirstEmailEditText"
+                        android:background="@drawable/edittext_background"
+                        android:hint="Powtórz Twój email"
+                        android:inputType="text"
+                        android:padding="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/ticketBuyingSecondEmailEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"/>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/ticketBuyingActivity_buyTicketButton"
+            android:text="KUP BILET"
+            android:background="@drawable/button_default"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

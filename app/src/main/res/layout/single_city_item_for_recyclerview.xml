@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:id="@+id/single_item_itemPanel"
+    android:layout_height="70dp">
+
+    <ImageView
+        android:id="@+id/single_city_item_icon"
+        android:src="@drawable/city_icon"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="11dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"/>
+
+    <RelativeLayout
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/single_city_item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="#000000"
+            android:id="@+id/single_city_item_cityName"
+            android:textStyle="bold"
+            android:text="Rzeszów"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textSize="13sp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/single_city_item_cityName"
+            android:layout_marginLeft="15dp"
+            android:text="ul. Jagielońska 27 - Dworzec Autobusowy"
+            android:id="@+id/single_city_item_busStopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:src="#C8C8C8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+</RelativeLayout>

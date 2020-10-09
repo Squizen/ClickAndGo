@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ChooseCityFromActivity">
+
+    <RelativeLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:id="@+id/topRelativeLayout"
+        android:background="@color/colorApplicationDarkBlue"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <EditText
+            android:id="@+id/chooseCityFromSearchEditText"
+            android:hint="Szukaj..."
+            android:paddingLeft="20dp"
+            android:background="@drawable/edittext_background"
+            android:layout_marginLeft="20dp"
+            android:nextFocusUp="@id/chooseCityFromSearchEditText"
+            android:nextFocusLeft="@id/chooseCityFromSearchEditText"
+            android:layout_centerVertical="true"
+            android:layout_width="240dp"
+            android:layout_height="40dp"/>
+
+        <RelativeLayout
+            android:layout_toRightOf="@id/chooseCityFromSearchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_centerInParent="true"
+                android:text="Anuluj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:fitsSystemWindows="true"
+        android:layoutAnimation="@anim/layout_fall_down"
+        android:layout_below="@+id/topRelativeLayout"
+        android:id="@+id/choose_cityFrom_recView"
+        android:layout_width="match_parent"
+        android:layout_above="@id/bottomRelLay"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottomRelLay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/bottomNaviDrawerTicketIcon"
+                android:src="@drawable/city_icon"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+            <TextView
+
+                android:layout_centerInParent="true"
+                android:text="Moje bilety"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

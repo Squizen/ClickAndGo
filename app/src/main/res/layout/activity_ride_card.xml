@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@color/colorApplicationDarkBlue"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:transitionName="containerRelativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="410dp">
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="15dp"
+            android:layout_margin="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:transitionName="rideRelLayTN"
+                android:background="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="370dp">
+
+                <TextView
+                    android:id="@+id/rideCardRideTitle"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:text="PRZEJAZD AUTOBUSOWY"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="rideCardRideCityFromNameTN"
+                    android:id="@+id/rideCardRideCityFromName"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/rideCardRideTitle"
+                    android:layout_marginTop="30dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:text="Mielec"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/rideCardRideCityFromBusStopName"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/rideCardRideCityFromName"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp"
+                    android:text="ul. Dworcowa 2"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@id/rideCardRideCityFromName"
+                    android:background="@drawable/arrowclickandgo"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"/>
+
+                <TextView
+                    android:id="@+id/rideCardRideCityFromBusStation"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/rideCardRideCityFromBusStopName"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp"
+                    android:text="Dworzec Autobusowy"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="rideCardRideCityToNameTN"
+                    android:gravity="end"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/rideCardRideCityToName"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@+id/rideCardRideCityFromBusStation"
+                    android:layout_marginTop="30dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp"
+                    android:text="Rzeszów"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginRight="10dp"
+                    android:gravity="end"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/rideCardRideCityToBusStopName"
+                    android:layout_below="@+id/rideCardRideCityToName"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp"
+                    android:text="ul. Grottera 2"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:gravity="end"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/rideCardRideCityToBusStation"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@id/rideCardRideCityToBusStopName"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="15sp"
+                    android:text="Dworzec Autobusowy"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="rideCardRideDateTN"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_marginTop="25dp"
+                    android:layout_below="@id/rideCardRideCityToBusStation"
+                    android:id="@+id/rideCardRideDate"
+                    android:layout_marginLeft="10dp"
+                    android:text="20 sierpnia 2020"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:transitionName="rideCardRideTimeTN"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"
+                    android:layout_below="@id/rideCardRideDate"
+                    android:id="@+id/rideCardRideTime"
+                    android:layout_marginLeft="10dp"
+                    android:text="21:25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/rideCardRidePrice"
+                    android:transitionName="rideCardRidePriceTN"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@id/rideCardRideCityToBusStation"
+                    android:gravity="end"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:text="19.50 zł"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/rideCardBuyTicketButton"
+            android:background="@drawable/button_default"
+            android:text="KUP BILET"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
