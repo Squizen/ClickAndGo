@@ -169,13 +169,13 @@ public class TicketBuyingActivity extends AppCompatActivity {
         ticket.setExpiringTime(rideResponse.getRide().getRideTime());
 
         String jsonWithData = "{"+
-                "\"rideId\""+" : "+ticket.getIdRide()+","+
+                "\"idRide\""+" : "+ticket.getIdRide()+","+
                 "\"ticketNumber\""+" : "+"\""+ticket.getTicketNumber()+"\", "+
                 "\"purchaseDate\""+" : "+"\""+ticket.getPurchaseDate()+"\", "+
                 "\"purchaseTime\""+" : "+"\""+ticket.getPurchaseTime()+"\", "+
                 "\"rideDate\""+" : "+"\""+ticket.getRideDate()+"\", "+
                 "\"ownerName\""+" : "+"\""+ticket.getOwnerName()+"\", "+
-                "\"owmerSurname\""+" : "+"\""+ticket.getOwnerSurname()+"\", "+
+                "\"ownerSurname\""+" : "+"\""+ticket.getOwnerSurname()+"\", "+
                 "\"ownerEmail\""+ " : "+"\""+ticket.getOwnerEmail()+"\", "+
                 "\"expiringDate\""+" : "+"\""+ticket.getExpiringDate()+"\", "+
                 "\"expiringTime\""+" : "+"\""+ticket.getExpiringTime()+"\"}";

@@ -5,6 +5,11 @@ import java.sql.Time;
 
 import breakthecode.com.clickandgo.entity.City;
 
+/*
+    RideRequestParameters jest klasa ktorej obiekty sa Singletonami. Ma ona na celu przechowywanie informacji odnosnie
+    wybranych przez uzytkownika danych typu CityFrom, CityTo, Time, Date
+ */
+
 public class RideRequestParameters {
 
     private static RideRequestParameters instanceOfRideRequestParameter = null;
@@ -27,10 +32,6 @@ public class RideRequestParameters {
             instanceOfRideRequestParameter = new RideRequestParameters();
         }
         return instanceOfRideRequestParameter;
-    }
-
-    public static void setInstanceOfRideRequestParameter(RideRequestParameters instanceOfRideRequestParameter) {
-        RideRequestParameters.instanceOfRideRequestParameter = instanceOfRideRequestParameter;
     }
 
     public boolean isCityFromPicked() {

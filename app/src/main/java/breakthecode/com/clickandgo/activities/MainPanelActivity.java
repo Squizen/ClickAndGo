@@ -225,5 +225,4 @@ public class MainPanelActivity extends AppCompatActivity
         Time timeOfRide = Time.valueOf(hour+":"+minuteString+":"+"00");
         rideRequestParameters.setTimeOfRide(timeOfRide);
     }
-
 }
