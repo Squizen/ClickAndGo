@@ -3,6 +3,7 @@ package breakthecode.com.clickandgo.activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,11 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -54,11 +60,13 @@ public class MainPanelActivity extends AppCompatActivity
     private RideRequestParameters rideRequestParameters;
 
     private List<City> listOfCities;
+    private ArrayList<UserTicket> listOfUsersTickets;
+
 
     private ImageView mainPanelActivity_QRIcon;
 
 
-    private ArrayList<UserTicket> listOfUsersTickets;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +78,7 @@ public class MainPanelActivity extends AppCompatActivity
         initWidgets();
         loadWidgetsData();
         setOnClickListeners();
+        loadLastTicket();
     }
 
     private void settings(){
@@ -77,24 +86,24 @@ public class MainPanelActivity extends AppCompatActivity
     }
 
     private void initWidgets(){
-        mainPanelChooseFromPanel = (CardView) findViewById(R.id.mainPanelChooseFromPanel);
-        mainPanelChooseToPanel = (CardView) findViewById(R.id.mainPanelChooseToPanel);
-        mainPanelChooseWhenPanel = (CardView) findViewById(R.id.mainPanelChooseWhenPanel);
-        mainPanelChooseTimePanel = (CardView) findViewById(R.id.mainPanelChooseTimePanel);
-        mainPanelActivityCardWithTicket = (CardView) findViewById(R.id.mainPanelActivityCardWithTicket);
-        mainpanelActivityCardWithoutTicket = (CardView) findViewById(R.id.mainpanelActivityCardWithoutTicket);
+        mainPanelChooseFromPanel = findViewById(R.id.mainPanelChooseFromPanel);
+        mainPanelChooseToPanel = findViewById(R.id.mainPanelChooseToPanel);
+        mainPanelChooseWhenPanel = findViewById(R.id.mainPanelChooseWhenPanel);
+        mainPanelChooseTimePanel = findViewById(R.id.mainPanelChooseTimePanel);
+        mainPanelActivityCardWithTicket = findViewById(R.id.mainPanelActivityCardWithTicket);
+        mainpanelActivityCardWithoutTicket = findViewById(R.id.mainpanelActivityCardWithoutTicket);
 
-        mainPanelChooseFromTxt = (TextView) findViewById(R.id.mainPanelChooseFromTxt);
-        mainPanelChooseToTxt = (TextView) findViewById(R.id.mainPanelChooseToTxt);
-        mainPanelChooseWhenTxt = (TextView) findViewById(R.id.mainPanelChooseWhenTxt);
-        mainPanelChooseTimeTxt = (TextView) findViewById(R.id.mainPanelChooseTimeTxt);
-        mainPanelActivity_LastTicketRideCitiesNamesTxt = (TextView) findViewById(R.id.mainPanelActivity_LastTicketRideCitiesNamesTxt);
-        mainPanelActivity_LastTicketRideDateTxt = (TextView) findViewById(R.id.mainPanelActivity_LastTicketRideDateTxt);
-        mainPanelActivity_LastTicketRideTimeTxt = (TextView) findViewById(R.id.mainPanelActivity_LastTicketRideTimeTxt);
+        mainPanelChooseFromTxt = findViewById(R.id.mainPanelChooseFromTxt);
+        mainPanelChooseToTxt = findViewById(R.id.mainPanelChooseToTxt);
+        mainPanelChooseWhenTxt = findViewById(R.id.mainPanelChooseWhenTxt);
+        mainPanelChooseTimeTxt = findViewById(R.id.mainPanelChooseTimeTxt);
+        mainPanelActivity_LastTicketRideCitiesNamesTxt = findViewById(R.id.mainPanelActivity_LastTicketRideCitiesNamesTxt);
+        mainPanelActivity_LastTicketRideDateTxt = findViewById(R.id.mainPanelActivity_LastTicketRideDateTxt);
+        mainPanelActivity_LastTicketRideTimeTxt = findViewById(R.id.mainPanelActivity_LastTicketRideTimeTxt);
 
-        mainPanelSendRequest = (Button) findViewById(R.id.mainPanelSendRequest);
+        mainPanelSendRequest = findViewById(R.id.mainPanelSendRequest);
 
-        mainPanelActivity_QRIcon = (ImageView) findViewById(R.id.mainPanelActivity_QRIcon);
+        mainPanelActivity_QRIcon = findViewById(R.id.mainPanelActivity_QRIcon);
     }
 
     private void setOnClickListeners(){
@@ -224,5 +233,35 @@ public class MainPanelActivity extends AppCompatActivity
         mainPanelChooseTimeTxt.setText(hour + ":" + minuteString);
         Time timeOfRide = Time.valueOf(hour+":"+minuteString+":"+"00");
         rideRequestParameters.setTimeOfRide(timeOfRide);
+    }
+    private void loadLastTicket(){
+        if(listOfUsersTickets.size() == 0){
+            mainPanelActivityCardWithTicket.setVisibility(View.GONE);
+            mainpanelActivityCardWithoutTicket.setVisibility(View.VISIBLE);
+        } else {
+            mainPanelActivityCardWithTicket.setVisibility(View.VISIBLE);
+            mainpanelActivityCardWithoutTicket.setVisibility(View.GONE);
+
+            generateQRcode(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getTicketNumber());
+            String rideRelation = listOfUsersTickets.get(listOfUsersTickets.size()-1).getCityFrom().getCityName() + " - " + listOfUsersTickets.get(listOfUsersTickets.size()-1).getCityTo().getCityName();
+            mainPanelActivity_LastTicketRideCitiesNamesTxt.setText(rideRelation);
+            mainPanelActivity_LastTicketRideDateTxt.setText(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getRideDate().toString());
+            mainPanelActivity_LastTicketRideTimeTxt.setText(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getExpiringTime().toString());
+        }
+    }
+    private void generateQRcode(String ticketNumber){
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+            BitMatrix bitMatrix = qrCodeWriter.encode(ticketNumber, BarcodeFormat.QR_CODE, 100, 100);
+            Bitmap bitmap = Bitmap.createBitmap(100,100, Bitmap.Config.RGB_565);
+            for (int i = 0; i < 100; i++) {
+                for (int j = 0; j < 100; j++){
+                    bitmap.setPixel(i,j,bitMatrix.get(i,j) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            mainPanelActivity_QRIcon.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 }
