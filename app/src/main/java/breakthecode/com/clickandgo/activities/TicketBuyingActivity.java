@@ -19,18 +19,22 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import breakthecode.com.clickandgo.R;
+import breakthecode.com.clickandgo.classes.AppSharedPreferencesHelper;
 import breakthecode.com.clickandgo.classes.StringValidation;
 import breakthecode.com.clickandgo.classes.TicketNumberGenerator;
 import breakthecode.com.clickandgo.entity.Ride;
 import breakthecode.com.clickandgo.entity.RideResponse;
 import breakthecode.com.clickandgo.entity.Ticket;
+import breakthecode.com.clickandgo.entity.UserTicket;
 import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class TicketBuyingActivity extends AppCompatActivity {
@@ -49,8 +53,11 @@ public class TicketBuyingActivity extends AppCompatActivity {
 
     private ArrayList<Boolean> isDataCorrect;
     private ArrayList<String> userData;
+    private ArrayList<UserTicket> listOfUserTickets;
 
     private EditText ticketBuyingNameEditText, ticketBuyingSurnameEditText, ticketBuyingFirstEmailEditText, ticketBuyingSecondEmailEditText;
+
+    private AppSharedPreferencesHelper sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,23 +74,27 @@ public class TicketBuyingActivity extends AppCompatActivity {
     private void settings(){
         getSupportActionBar().hide();
     }
+
     private void loadData(){
         rideRequestParameters = RideRequestParameters.getInstance();
+        sharedPrefs = new AppSharedPreferencesHelper(this, "Shared_Preferences");
         userData = new ArrayList<>();
+        listOfUserTickets = sharedPrefs.getListOfUsersTickets();
     }
+
     private void initWidgets(){
-        ticketBuingRideCityFromName = (TextView) findViewById(R.id.ticketBuingRideCityFromName);
-        ticketBuingRideCityToName = (TextView) findViewById(R.id.ticketBuingRideCityToName);
-        ticketBuingRideCityRideDate = (TextView) findViewById(R.id.ticketBuingRideCityRideDate);
-        ticketBuingRideCityRideTime = (TextView) findViewById(R.id.ticketBuingRideCityRideTime);
-        ticketBuingRideCityRidePrice = (TextView) findViewById(R.id.ticketBuingRideCityRidePrice);
+        ticketBuingRideCityFromName = findViewById(R.id.ticketBuingRideCityFromName);
+        ticketBuingRideCityToName = findViewById(R.id.ticketBuingRideCityToName);
+        ticketBuingRideCityRideDate = findViewById(R.id.ticketBuingRideCityRideDate);
+        ticketBuingRideCityRideTime = findViewById(R.id.ticketBuingRideCityRideTime);
+        ticketBuingRideCityRidePrice = findViewById(R.id.ticketBuingRideCityRidePrice);
 
-        ticketBuyingActivity_buyTicketButton = (Button) findViewById(R.id.ticketBuyingActivity_buyTicketButton);
+        ticketBuyingActivity_buyTicketButton = findViewById(R.id.ticketBuyingActivity_buyTicketButton);
 
-        ticketBuyingNameEditText = (EditText) findViewById(R.id.ticketBuyingNameEditText);
-        ticketBuyingSurnameEditText = (EditText) findViewById(R.id.ticketBuyingSurnameEditText);
-        ticketBuyingFirstEmailEditText = (EditText) findViewById(R.id.ticketBuyingSurnameEditText);
-        ticketBuyingSecondEmailEditText = (EditText) findViewById(R.id.ticketBuyingSecondEmailEditText);
+        ticketBuyingNameEditText = findViewById(R.id.ticketBuyingNameEditText);
+        ticketBuyingSurnameEditText = findViewById(R.id.ticketBuyingSurnameEditText);
+        ticketBuyingFirstEmailEditText = findViewById(R.id.ticketBuyingSurnameEditText);
+        ticketBuyingSecondEmailEditText = findViewById(R.id.ticketBuyingSecondEmailEditText);
     }
     private void initWidgetsData(){
         loadRideResponseObject();
@@ -182,12 +193,12 @@ public class TicketBuyingActivity extends AppCompatActivity {
 
         ticket.getIdRide();
         Log.d(TAG, "buyTicket: " + jsonWithData);
-        addTicketToDatabase(jsonWithData);
+        addTicketToDatabase(jsonWithData, ticket);
 
         //TODO if response TRUE - dodany do bazy poprawnie
 
     }
-    private void addTicketToDatabase(String jsonWithData){
+    private void addTicketToDatabase(String jsonWithData, final Ticket ticket){
         final String saveData = jsonWithData;
         String serverURL = SERVER_URL + "/api/tickets";
 
@@ -195,7 +206,14 @@ public class TicketBuyingActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, serverURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                UserTicket userTicket = new UserTicket();
+                userTicket.setCityFrom(rideRequestParameters.getCityFrom());
+                userTicket.setCityTo(rideRequestParameters.getCityTo());
+                userTicket.setTicket(ticket);
+                listOfUserTickets.add(userTicket);
+                sharedPrefs.setListOfUsersTickets(listOfUserTickets);
+                Intent intent = new Intent(TicketBuyingActivity.this, MainPanelActivity.class);
+                startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -211,11 +229,7 @@ public class TicketBuyingActivity extends AppCompatActivity {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
-                try{
-                    return saveData == null ? null : saveData.getBytes("utf-8");
-                }catch(UnsupportedEncodingException uee){
-                    return null;
-                }
+                return saveData == null ? null : saveData.getBytes(StandardCharsets.UTF_8);
             }
         };
         requestQueue.add(stringRequest);

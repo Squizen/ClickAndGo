@@ -43,17 +43,17 @@ public class RideCardActivity extends AppCompatActivity {
     }
 
     private void initWidgets(){
-        rideCardRideCityFromName = (TextView) findViewById(R.id.rideCardRideCityFromName);
-        rideCardRideCityFromBusStopName = (TextView) findViewById(R.id.rideCardRideCityFromBusStopName);
-        rideCardRideCityFromBusStation = (TextView) findViewById(R.id.rideCardRideCityFromBusStation);
-        rideCardRideCityToName = (TextView) findViewById(R.id.rideCardRideCityToName);
-        rideCardRideCityToBusStopName = (TextView) findViewById(R.id.rideCardRideCityToBusStopName);
-        rideCardRideCityToBusStation = (TextView) findViewById(R.id.rideCardRideCityToBusStation);
-        rideCardRideDate = (TextView) findViewById(R.id.rideCardRideDate);
-        rideCardRideTime = (TextView) findViewById(R.id.rideCardRideTime);
-        rideCardRidePrice = (TextView) findViewById(R.id.rideCardRidePrice);
+        rideCardRideCityFromName = findViewById(R.id.rideCardRideCityFromName);
+        rideCardRideCityFromBusStopName = findViewById(R.id.rideCardRideCityFromBusStopName);
+        rideCardRideCityFromBusStation = findViewById(R.id.rideCardRideCityFromBusStation);
+        rideCardRideCityToName = findViewById(R.id.rideCardRideCityToName);
+        rideCardRideCityToBusStopName = findViewById(R.id.rideCardRideCityToBusStopName);
+        rideCardRideCityToBusStation = findViewById(R.id.rideCardRideCityToBusStation);
+        rideCardRideDate = findViewById(R.id.rideCardRideDate);
+        rideCardRideTime = findViewById(R.id.rideCardRideTime);
+        rideCardRidePrice = findViewById(R.id.rideCardRidePrice);
 
-        rideCardBuyTicketButton = (Button) findViewById(R.id.rideCardBuyTicketButton);
+        rideCardBuyTicketButton = findViewById(R.id.rideCardBuyTicketButton);
     }
 
     private void loadData(){
