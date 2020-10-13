@@ -47,7 +47,7 @@ public class MainPanelActivity extends AppCompatActivity
     private CardView mainPanelChooseFromPanel, mainPanelChooseToPanel, mainPanelChooseWhenPanel,
                         mainPanelChooseTimePanel, mainPanelActivityCardWithTicket, mainpanelActivityCardWithoutTicket;
     private TextView mainPanelChooseFromTxt, mainPanelChooseToTxt, mainPanelChooseWhenTxt, mainPanelChooseTimeTxt, mainPanelActivity_LastTicketRideCitiesNamesTxt,
-            mainPanelActivity_LastTicketRideDateTxt, mainPanelActivity_LastTicketRideTimeTxt;
+            mainPanelActivity_LastTicketRideDateTxt, mainPanelActivity_LastTicketRideTimeTxt, mainPanelActivity_clickToIncreaseSizeTxt;
 
     private boolean isCityFromPicked, isCityToPicked;
 
@@ -64,7 +64,7 @@ public class MainPanelActivity extends AppCompatActivity
     private ArrayList<UserTicket> listOfUsersTickets;
 
 
-    private ImageView mainPanelActivity_QRIcon;
+    private ImageView mainPanelActivity_QRIcon, mainPanelLogo;
 
 
 
@@ -73,6 +73,8 @@ public class MainPanelActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_panel);
+
+        Log.d(TAG, "onCreate: started ");
 
         settings();
         loadData();
@@ -98,6 +100,8 @@ public class MainPanelActivity extends AppCompatActivity
         mainPanelChooseToTxt = findViewById(R.id.mainPanelChooseToTxt);
         mainPanelChooseWhenTxt = findViewById(R.id.mainPanelChooseWhenTxt);
         mainPanelChooseTimeTxt = findViewById(R.id.mainPanelChooseTimeTxt);
+        mainPanelActivity_clickToIncreaseSizeTxt = (TextView) findViewById(R.id.mainPanelActivity_clickToIncreaseSizeTxt);
+
         mainPanelActivity_LastTicketRideCitiesNamesTxt = findViewById(R.id.mainPanelActivity_LastTicketRideCitiesNamesTxt);
         mainPanelActivity_LastTicketRideDateTxt = findViewById(R.id.mainPanelActivity_LastTicketRideDateTxt);
         mainPanelActivity_LastTicketRideTimeTxt = findViewById(R.id.mainPanelActivity_LastTicketRideTimeTxt);
@@ -105,6 +109,7 @@ public class MainPanelActivity extends AppCompatActivity
         mainPanelSendRequest = findViewById(R.id.mainPanelSendRequest);
 
         mainPanelActivity_QRIcon = findViewById(R.id.mainPanelActivity_QRIcon);
+        mainPanelLogo = (ImageView) findViewById(R.id.mainPanelLogo);
     }
 
     private void setOnClickListeners(){
@@ -147,6 +152,19 @@ public class MainPanelActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 showTicketDialog();
+            }
+        });
+        mainPanelActivity_clickToIncreaseSizeTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTicketDialog();
+            }
+        });
+        mainPanelLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainPanelActivity.this, MyTicketsActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -241,13 +259,16 @@ public class MainPanelActivity extends AppCompatActivity
         Time timeOfRide = Time.valueOf(hour+":"+minuteString+":"+"00");
         rideRequestParameters.setTimeOfRide(timeOfRide);
     }
+
     private void loadLastTicket(){
         if(listOfUsersTickets.size() == 0){
             mainPanelActivityCardWithTicket.setVisibility(View.GONE);
             mainpanelActivityCardWithoutTicket.setVisibility(View.VISIBLE);
+            mainPanelActivity_clickToIncreaseSizeTxt.setVisibility(View.GONE);
         } else {
             mainPanelActivityCardWithTicket.setVisibility(View.VISIBLE);
             mainpanelActivityCardWithoutTicket.setVisibility(View.GONE);
+            mainPanelActivity_clickToIncreaseSizeTxt.setVisibility(View.VISIBLE);
 
             generateQRcode(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getTicketNumber());
             String rideRelation = listOfUsersTickets.get(listOfUsersTickets.size()-1).getCityFrom().getCityName() + " - " + listOfUsersTickets.get(listOfUsersTickets.size()-1).getCityTo().getCityName();
@@ -256,6 +277,7 @@ public class MainPanelActivity extends AppCompatActivity
             mainPanelActivity_LastTicketRideTimeTxt.setText(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getExpiringTime().toString());
         }
     }
+
     private void generateQRcode(String ticketNumber){
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
@@ -271,6 +293,7 @@ public class MainPanelActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
     private void showTicketDialog(){
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainPanelActivity.this);
         View view = getLayoutInflater().inflate(R.layout.ticket_dialog, null);
