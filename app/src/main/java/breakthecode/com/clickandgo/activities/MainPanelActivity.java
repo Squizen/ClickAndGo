@@ -1,5 +1,6 @@
 package breakthecode.com.clickandgo.activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -142,6 +143,12 @@ public class MainPanelActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        mainPanelActivityCardWithTicket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTicketDialog();
+            }
+        });
     }
 
     private void loadData(){
@@ -263,5 +270,39 @@ public class MainPanelActivity extends AppCompatActivity
         } catch (WriterException e) {
             e.printStackTrace();
         }
+    }
+    private void showTicketDialog(){
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainPanelActivity.this);
+        View view = getLayoutInflater().inflate(R.layout.ticket_dialog, null);
+        ImageView qrCodeInTicketDialog = view.findViewById(R.id.ticketDialog_qrCode);
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+            BitMatrix bitMatrix = qrCodeWriter.encode(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getTicketNumber(), BarcodeFormat.QR_CODE, 200, 200);
+            Bitmap bitmap = Bitmap.createBitmap(200,200, Bitmap.Config.RGB_565);
+            for (int i = 0; i < 200; i++) {
+                for (int j = 0; j < 200; j++){
+                    bitmap.setPixel(i,j,bitMatrix.get(i,j) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            qrCodeInTicketDialog.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        TextView ticketDialog_cityNames = view.findViewById(R.id.ticketDialog_cityNames);
+        String rideRelation = listOfUsersTickets.get(listOfUsersTickets.size()-1).getCityFrom().getCityName() + " - " + listOfUsersTickets.get(listOfUsersTickets.size()-1).getCityTo().getCityName();
+        ticketDialog_cityNames.setText(rideRelation);
+        TextView ticketDialog_rideDate = view.findViewById(R.id.ticketDialog_rideDate);
+        ticketDialog_rideDate.setText(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getRideDate().toString());
+        TextView ticketDialog_rideTime = view.findViewById(R.id.ticketDialog_rideTime);
+        ticketDialog_rideTime.setText(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getExpiringTime().toString());
+        TextView ticketDialog_ownerName = view.findViewById(R.id.ticketDialog_ownerName);
+        ticketDialog_ownerName.setText(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getOwnerName() + " " + listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getOwnerSurname());
+        TextView ticketDialog_ownerEmail = view.findViewById(R.id.ticketDialog_ownerEmail);
+        ticketDialog_ownerEmail.setText(listOfUsersTickets.get(listOfUsersTickets.size()-1).getTicket().getOwnerEmail());
+        alertDialog.setView(view);
+        AlertDialog alert = alertDialog.create();
+        alert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        alert.show();
+
     }
 }

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:background="#ffffff00"
+    app:cardCornerRadius="15dp"
+    android:layout_width="300dp"
+    android:layout_height="500dp"
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_gravity="center"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:text="Twój bilet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ticketDialog_qrCode"
+            android:background="@drawable/qr_code"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="200dp"
+            android:layout_height="200dp"/>
+
+        <RelativeLayout
+            android:layout_margin="30dp"
+            android:layout_below="@+id/ticketDialog_qrCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:id="@+id/ticketDialog_cityNames"
+                android:text="Mielec - Rzeszów"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:id="@+id/ticketDialog_rideDate"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/ticketDialog_cityNames"
+                android:text="20.12.2020"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:id="@+id/ticketDialog_rideTime"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/ticketDialog_rideDate"
+                android:text="15:45"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:id="@+id/ticketDialog_ownerName"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/ticketDialog_rideTime"
+                android:text="Jakub Rucki"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:id="@+id/ticketDialog_ownerEmail"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/ticketDialog_ownerName"
+                android:text="jakub.rucki@gmail.com"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
