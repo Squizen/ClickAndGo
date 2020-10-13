@@ -93,7 +93,7 @@ public class TicketBuyingActivity extends AppCompatActivity {
 
         ticketBuyingNameEditText = findViewById(R.id.ticketBuyingNameEditText);
         ticketBuyingSurnameEditText = findViewById(R.id.ticketBuyingSurnameEditText);
-        ticketBuyingFirstEmailEditText = findViewById(R.id.ticketBuyingSurnameEditText);
+        ticketBuyingFirstEmailEditText = findViewById(R.id.ticketBuyingFirstEmailEditText);
         ticketBuyingSecondEmailEditText = findViewById(R.id.ticketBuyingSecondEmailEditText);
     }
     private void initWidgetsData(){
