@@ -23,6 +23,9 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:fitsSystemWindows="true"
+        android:layoutAnimation="@anim/layout_fall_down"
+        android:id="@+id/myTicketsActivity_rideRecView"
         android:layout_above="@id/my_tickets_activity_myTicketsBottomRel"
         android:layout_below="@id/my_tickets_activity_myTicketsTopRel"
         android:padding="15dp"
@@ -38,6 +41,7 @@
         android:layout_height="60dp">
 
         <Button
+            android:id="@+id/myTicketsActivity_deleteAllTickets"
             android:padding="15dp"
             android:text="Wyczyść listę Twoich biletów"
             android:layout_centerInParent="true"

@@ -89,7 +89,7 @@
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
-        
+
         <RelativeLayout
             android:layout_below="@id/mainPanelChooseToPanel"
             android:layout_centerHorizontal="true"
@@ -216,12 +216,12 @@
 
 
 
-                        <ImageView
+                    <ImageView
 
-                            android:id="@+id/mainPanelActivity_QRIcon"
-                            android:layout_centerVertical="true"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"/>
+                        android:id="@+id/mainPanelActivity_QRIcon"
+                        android:layout_centerVertical="true"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"/>
 
                     <RelativeLayout
                         android:layout_margin="15dp"
@@ -264,7 +264,7 @@
 
             </androidx.cardview.widget.CardView>
 
-<!--             this CardView is displayed when there is NOT a Ticket -->
+            <!--             this CardView is displayed when there is NOT a Ticket -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/mainpanelActivityCardWithoutTicket"
                 app:cardCornerRadius="15dp"
@@ -273,26 +273,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:textColor="@color/colorBlack"
-                    android:text="Brak biletu do wyświetlenia"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    <TextView
+                        android:textColor="@color/colorBlack"
+                        android:text="Brak biletu do wyświetlenia"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
 
 
-            </RelativeLayout>
+                </RelativeLayout>
 
 
 
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/mainPanelActivity_clickToIncreaseSizeTxt"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/colorWhite"
                 android:layout_alignParentBottom="true"
