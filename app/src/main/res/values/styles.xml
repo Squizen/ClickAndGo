@@ -14,4 +14,8 @@
         <item name="colorAccent">@color/colorApplicationDarkBlue</item>
     </style>
 
+    <style name="DatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/colorApplicationDarkBlue</item>
+    </style>
+
 </resources>

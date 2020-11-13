@@ -14,11 +14,11 @@
 
         <ImageView
             android:id="@+id/mainPanelLogo"
-            android:layout_width="160dp"
-            android:layout_height="50dp"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:src="@drawable/logo_blue" />
+            android:src="@drawable/clickgo_poziom" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/mainPanelChooseFromPanel"
@@ -36,8 +36,8 @@
 
                 <ImageView
                     android:id="@+id/mainPanelChooseFromIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:src="@drawable/from_icon" />
@@ -71,8 +71,8 @@
 
                 <ImageView
                     android:id="@+id/mainPanelChooseToIcon"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
                     android:src="@drawable/to_icon" />
@@ -110,11 +110,11 @@
 
                     <ImageView
                         android:id="@+id/mainPanelChooseWhenIcon"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/when_icon" />
+                        android:src="@drawable/calendar_icon" />
 
                     <TextView
                         android:id="@+id/mainPanelChooseWhenTxt"
@@ -144,8 +144,8 @@
 
                     <ImageView
                         android:id="@+id/mainPanelChooseTimeIcon"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/when_icon" />
