@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void run(){
                 Intent intent = new Intent(MainActivity.this, MainPanelActivity.class);
                 startActivity(intent);
+                Animatoo.animateCard(MainActivity.this);
             }
         }, delay);
     }
