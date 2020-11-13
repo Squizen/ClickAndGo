@@ -36,7 +36,7 @@ import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "myLogs MainAct";
-    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8080";
+    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
 
     private AppSharedPreferencesHelper sharedPrefs;
     private RideRequestParameters rideRequestParameters;

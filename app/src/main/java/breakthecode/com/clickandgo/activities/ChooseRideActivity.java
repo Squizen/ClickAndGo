@@ -52,7 +52,7 @@ import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class ChooseRideActivity extends AppCompatActivity implements RideCallback {
     private static final String TAG = "myLogs";
-    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8080";
+    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
 
     private RideRequestParameters rideRequestParameters;
     private List<RideResponse> listOfRides;
@@ -142,7 +142,7 @@ public class ChooseRideActivity extends AppCompatActivity implements RideCallbac
         listOfRides = new ArrayList<>();
         loadingDialog = new LoadingDialog(this);
         RequestQueue queue = Volley.newRequestQueue(this);
-        Log.d(TAG, "requestRides: SERVER URL - " + SERVER_URL);
+        Log.d(TAG, "requestRides: SERVER URL - " + connection_address);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, connection_address, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {

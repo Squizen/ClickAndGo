@@ -31,7 +31,7 @@ import breakthecode.com.clickandgo.entity.City;
 public class RequestService {
     private static final String TAG = "myLogs RequestServ";
 
-    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8080";
+    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
     private static final String CHARSET = "UTF-8";
     private AppSharedPreferencesHelper sharedPrefs;
     private List<City> listOfCities;

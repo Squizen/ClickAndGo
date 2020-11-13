@@ -14,11 +14,11 @@
 
         <ImageView
             android:id="@+id/mainPanelLogo"
-            android:layout_width="160dp"
-            android:layout_height="50dp"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:src="@drawable/logo_blue" />
+            android:src="@drawable/clickgo_poziom" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/mainPanelChooseFromPanel"

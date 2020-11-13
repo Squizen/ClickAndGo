@@ -46,7 +46,7 @@ import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 public class ChooseCityToActivity extends AppCompatActivity implements CitiesToRecViewAdapter.OnItemClickListener {
     private static final String TAG = "myLogs ChooseCity";
 
-    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8080";
+    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
     public static final String CITY_PICKED = "CITY_TO_PICKED";
 
     private AppSharedPreferencesHelper sharedPrefs;
