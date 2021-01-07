@@ -52,7 +52,7 @@ import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class ChooseRideActivity extends AppCompatActivity implements RideCallback {
     private static final String TAG = "myLogs";
-    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
+    private static final String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
 
     private RideRequestParameters rideRequestParameters;
     private List<RideResponse> listOfRides;

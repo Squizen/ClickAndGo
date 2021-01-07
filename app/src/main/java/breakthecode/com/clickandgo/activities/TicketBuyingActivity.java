@@ -1,9 +1,14 @@
 package breakthecode.com.clickandgo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,17 +34,20 @@ import java.util.List;
 
 import breakthecode.com.clickandgo.R;
 import breakthecode.com.clickandgo.classes.AppSharedPreferencesHelper;
+import breakthecode.com.clickandgo.classes.MailSupport;
 import breakthecode.com.clickandgo.classes.StringValidation;
 import breakthecode.com.clickandgo.classes.TicketNumberGenerator;
+import breakthecode.com.clickandgo.classes.TransactionDialog;
 import breakthecode.com.clickandgo.entity.Ride;
 import breakthecode.com.clickandgo.entity.RideResponse;
 import breakthecode.com.clickandgo.entity.Ticket;
 import breakthecode.com.clickandgo.entity.UserTicket;
+import breakthecode.com.clickandgo.recyclerviews.CitiesToRecViewAdapter;
 import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class TicketBuyingActivity extends AppCompatActivity {
     private static final String TAG = "TicketBuying myLogs";
-    private static String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
+    private static final String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
 
     private TextView ticketBuingRideCityFromName, ticketBuingRideCityToName, ticketBuingRideCityRideDate,
             ticketBuingRideCityRideTime, ticketBuingRideCityRidePrice;
@@ -48,6 +56,8 @@ public class TicketBuyingActivity extends AppCompatActivity {
     private RideRequestParameters rideRequestParameters;
 
     private Button ticketBuyingActivity_buyTicketButton;
+
+    private TransactionDialog transactionDialog;
 
     private RequestQueue requestQueue;
 
@@ -58,6 +68,12 @@ public class TicketBuyingActivity extends AppCompatActivity {
     private EditText ticketBuyingNameEditText, ticketBuyingSurnameEditText, ticketBuyingFirstEmailEditText, ticketBuyingSecondEmailEditText;
 
     private AppSharedPreferencesHelper sharedPrefs;
+
+    private OnEmailSendListener onEmailSendListener;
+
+    public interface OnEmailSendListener{
+        void onEmailSend();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +96,7 @@ public class TicketBuyingActivity extends AppCompatActivity {
         sharedPrefs = new AppSharedPreferencesHelper(this, "Shared_Preferences");
         userData = new ArrayList<>();
         listOfUserTickets = sharedPrefs.getListOfUsersTickets();
+        transactionDialog = new TransactionDialog(this);
     }
 
     private void initWidgets(){
@@ -139,12 +156,8 @@ public class TicketBuyingActivity extends AppCompatActivity {
                     isDataCorrect.add(false);
                     // TODO incorrect email
                 }
-                if(StringValidation.isFirstEmailIdenticalAsSecondOne(ticketBuyingFirstEmailEditText.getText().toString(), ticketBuyingSecondEmailEditText.getText().toString())){
-                    isDataCorrect.add(true);
-                } else {
-                    isDataCorrect.add(false);
-                    // TODO incorrect second email
-                }
+                // TODO incorrect second email
+                isDataCorrect.add(StringValidation.isFirstEmailIdenticalAsSecondOne(ticketBuyingFirstEmailEditText.getText().toString(), ticketBuyingSecondEmailEditText.getText().toString()));
                 if(isDataCorrect.contains(false)){
                     // TODO dont do anything
                 } else {
@@ -202,6 +215,14 @@ public class TicketBuyingActivity extends AppCompatActivity {
         final String saveData = jsonWithData;
         String serverURL = SERVER_URL + "/api/tickets";
 
+        transactionDialog.startTransactionDialog();
+        onEmailSendListener = new OnEmailSendListener() {
+            @Override
+            public void onEmailSend() {
+                transactionDialog.dismissDialog();
+            }
+        };
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, serverURL, new Response.Listener<String>() {
             @Override
@@ -212,13 +233,76 @@ public class TicketBuyingActivity extends AppCompatActivity {
                 userTicket.setTicket(ticket);
                 listOfUserTickets.add(userTicket);
                 sharedPrefs.setListOfUsersTickets(listOfUserTickets);
-                Intent intent = new Intent(TicketBuyingActivity.this, MainPanelActivity.class);
-                startActivity(intent);
+
+                MailSupport mailSupport = new MailSupport();
+                mailSupport.setCityFrom(rideRequestParameters.getCityFrom().getCityName());
+                mailSupport.setCityTo(rideRequestParameters.getCityTo().getCityName());
+                mailSupport.setOwnerName(ticket.getOwnerName());
+                mailSupport.setOwnerSurname(ticket.getOwnerSurname());
+                mailSupport.setEmailAddress(ticket.getOwnerEmail());
+                mailSupport.setDateOfRide(ticket.getRideDate().toString());
+                mailSupport.setTimeOfRide(ticket.getExpiringTime().toString());
+                mailSupport.setTicketNumber(ticket.getTicketNumber());
+                sendMail(mailSupport);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: " + error);
+            }
+        })
+        {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return saveData == null ? null : saveData.getBytes(StandardCharsets.UTF_8);
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+
+    private void sendMail(MailSupport mailSupport){
+        String serverURL = SERVER_URL + "/api/sendMail";
+
+        String jsonWithData = "{"+
+                "\"cityFrom\""+" : "+"\""+mailSupport.getCityFrom()+"\","+
+                "\"cityTo\""+" : "+"\""+mailSupport.getCityTo()+"\", "+
+                "\"emailAddress\""+" : "+"\""+mailSupport.getEmailAddress()+"\", "+
+                "\"ownerName\""+" : "+"\""+mailSupport.getOwnerName()+"\", "+
+                "\"ownerSurname\""+" : "+"\""+mailSupport.getOwnerSurname()+"\", "+
+                "\"dateOfRide\""+" : "+"\""+mailSupport.getDateOfRide()+"\", "+
+                "\"timeOfRide\""+" : "+"\""+mailSupport.getTimeOfRide()+"\", "+
+                "\"ticketNumber\""+" : "+"\""+mailSupport.getTicketNumber()+"\"}";
+
+        final String saveData = jsonWithData;
+        Log.d(TAG, "sendMail: " + jsonWithData);
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onEmailSendListener.onEmailSend();
+                Dialog dialog = new Dialog(TicketBuyingActivity.this);
+                dialog.setContentView(R.layout.buying_successful);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.show();
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Intent intent = new Intent(TicketBuyingActivity.this, MainPanelActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error);
+                Intent intent = new Intent(TicketBuyingActivity.this, MainPanelActivity.class);
+                startActivity(intent);
             }
         })
         {

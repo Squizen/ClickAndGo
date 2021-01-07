@@ -29,11 +29,11 @@ public class TicketsRecyclerViewAdapter extends RecyclerView.Adapter<TicketsRecy
 
     private List<UserTicket> listOfUserTickets = new ArrayList<>();
 
-    private Context context;
+    private final Context context;
 
     private RideRequestParameters rideRequestParameters;
 
-    private TicketCallBack callback;
+    private final TicketCallBack callback;
 
     public TicketsRecyclerViewAdapter(Context context, TicketCallBack callback){
         this.context = context;

@@ -25,8 +25,8 @@ public class CitiesFromRecViewAdapter extends RecyclerView.Adapter<CitiesFromRec
 
     private static final String TAG = "myLogs CitiesRecV";
     private List<City> listOfCities = new ArrayList<City>();
-    private Context context;
-    private RideRequestParameters rideRequestParameters = RideRequestParameters.getInstance();
+    private final Context context;
+    private final RideRequestParameters rideRequestParameters = RideRequestParameters.getInstance();
     private OnItemClickListener listener;
 
     public interface OnItemClickListener{
@@ -61,9 +61,10 @@ public class CitiesFromRecViewAdapter extends RecyclerView.Adapter<CitiesFromRec
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView cityImg;
-        private TextView cityName, busStopName;
-        private RelativeLayout itemPanel;
+        private final ImageView cityImg;
+        private final TextView cityName;
+        private final TextView busStopName;
+        private final RelativeLayout itemPanel;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);

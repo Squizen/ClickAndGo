@@ -34,11 +34,11 @@ public class RidesRecyclerViewAdapter extends RecyclerView.Adapter<RidesRecycler
     private static final String TAG = "myLogs CitiesRecV";
     private List<RideResponse> listOfRides = new ArrayList<>();
 
-    private Context context;
+    private final Context context;
 //    private OnItemClickListener listener;
     private RideRequestParameters rideRequestParameters;
 
-    private RideCallback callback;
+    private final RideCallback callback;
 
 //    public interface OnItemClickListener{
 //        void onItemClick(int position);
@@ -79,7 +79,11 @@ public class RidesRecyclerViewAdapter extends RecyclerView.Adapter<RidesRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView cityFromName, cityToName, rideTime, rideDate, ridePrice;
+        private final TextView cityFromName;
+        private final TextView cityToName;
+        private final TextView rideTime;
+        private final TextView rideDate;
+        private final TextView ridePrice;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
