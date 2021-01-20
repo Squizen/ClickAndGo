@@ -6,17 +6,17 @@ import java.sql.Time;
 public class Ride implements Serializable {
 
     private int id;
-    private int idCityFrom;
-    private int idCityTo;
+    private City cityFrom;
+    private City cityTo;
     private double price;
     private Time rideTime;
 
     public Ride(){}
 
-    public Ride(int id, int idCityFrom, int idCityTo, double price, Time rideTime) {
+    public Ride(int id, City cityFrom, City cityTo, double price, Time rideTime) {
         this.id = id;
-        this.idCityFrom = idCityFrom;
-        this.idCityTo = idCityTo;
+        this.cityFrom = cityFrom;
+        this.cityTo = cityTo;
         this.price = price;
         this.rideTime = rideTime;
     }
@@ -29,20 +29,20 @@ public class Ride implements Serializable {
         this.id = id;
     }
 
-    public int getIdCityFrom() {
-        return idCityFrom;
+    public City getCityFrom() {
+        return cityFrom;
     }
 
-    public void setIdCityFrom(int idCityFrom) {
-        this.idCityFrom = idCityFrom;
+    public void setCityFrom(City cityFrom) {
+        this.cityFrom = cityFrom;
     }
 
-    public int getIdCityTo() {
-        return idCityTo;
+    public City getCityTo() {
+        return cityTo;
     }
 
-    public void setIdCityTo(int idCityTo) {
-        this.idCityTo = idCityTo;
+    public void setCityTo(City cityTo) {
+        this.cityTo = cityTo;
     }
 
     public double getPrice() {

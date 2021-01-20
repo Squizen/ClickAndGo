@@ -44,8 +44,6 @@ import breakthecode.com.clickandgo.R;
 import breakthecode.com.clickandgo.classes.LoadingDialog;
 import breakthecode.com.clickandgo.entity.City;
 import breakthecode.com.clickandgo.entity.Ride;
-import breakthecode.com.clickandgo.entity.RideResponse;
-import breakthecode.com.clickandgo.recyclerviews.CitiesToRecViewAdapter;
 import breakthecode.com.clickandgo.recyclerviews.RideCallback;
 import breakthecode.com.clickandgo.recyclerviews.RidesRecyclerViewAdapter;
 import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
@@ -55,7 +53,7 @@ public class ChooseRideActivity extends AppCompatActivity implements RideCallbac
     private static final String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
 
     private RideRequestParameters rideRequestParameters;
-    private List<RideResponse> listOfRides;
+    private List<Ride> listOfRides;
     private RecyclerView rideRecView;
 
     private LoadingDialog loadingDialog;
@@ -93,20 +91,20 @@ public class ChooseRideActivity extends AppCompatActivity implements RideCallbac
     private String constructRequestURL(RideRequestParameters rideRequestParamteres) {
         StringBuilder sb = new StringBuilder();
         sb = sb.append(SERVER_URL + "/api/rides");
-        if (rideRequestParameters.isCityFromPicked() && rideRequestParamteres.isCityToPicked()) {
+        if (rideRequestParameters.isCityFromPicked() && rideRequestParameters.isCityToPicked()) {
             sb.append("/bothParams?cityFrom=" + rideRequestParamteres.getCityFrom().getId());
             sb.append("&cityTo=" + rideRequestParamteres.getCityTo().getId());
             sb.append("&timeStr=" + rideRequestParamteres.getTimeOfRide().toString());
             return sb.toString();
-        } else if (rideRequestParameters.isCityFromPicked() && !rideRequestParamteres.isCityToPicked()) {
+        } else if (rideRequestParameters.isCityFromPicked() && !rideRequestParameters.isCityToPicked()) {
             sb.append("/fromParam?timeStr=" + rideRequestParamteres.getTimeOfRide().toString());
             sb.append("&cityFrom=" + rideRequestParamteres.getCityFrom().getId());
             return sb.toString();
-        } else if (!rideRequestParameters.isCityFromPicked() && rideRequestParamteres.isCityToPicked()) {
+        } else if (!rideRequestParameters.isCityFromPicked() && rideRequestParameters.isCityToPicked()) {
             sb.append("/toParam?cityTo=" + rideRequestParamteres.getCityTo().getId());
             sb.append("&timeStr=" + rideRequestParamteres.getTimeOfRide().toString());
             return sb.toString();
-        } else if (!rideRequestParameters.isCityFromPicked() && !rideRequestParamteres.isCityToPicked()) {
+        } else if (!rideRequestParameters.isCityFromPicked() && !rideRequestParameters.isCityToPicked()) {
             sb.append("/timeParam?timeStr=" + rideRequestParamteres.getTimeOfRide().toString());
             return sb.toString();
         } else {
@@ -149,34 +147,24 @@ public class ChooseRideActivity extends AppCompatActivity implements RideCallbac
                 Log.d(TAG, "onResponse: ");
                 for (int i = 0; i < response.length(); i++) {
                     try {
-                        JSONObject responseObject = response.getJSONObject(i);
-                        JSONObject singleRide = responseObject.getJSONObject("ride");
+                        JSONObject rideObject = response.getJSONObject(i);
                         Ride ride = new Ride();
-                        ride.setId(singleRide.getInt("id"));
-                        ride.setIdCityFrom(singleRide.getInt("idCityFrom"));
-                        ride.setIdCityTo(singleRide.getInt("idCityTo"));
-                        ride.setPrice(singleRide.getDouble("price"));
-                        Time time = Time.valueOf(singleRide.getString("rideTime"));
-                        ride.setRideTime(time);
-
-                        RideResponse rideResponse = new RideResponse();
-                        rideResponse.setRide(ride);
-
-                        JSONObject responseObjectCityFrom = responseObject.getJSONObject("cityFrom");
-                        City city = new City();
-                        city.setId(responseObjectCityFrom.getInt("id"));
-                        city.setCityName(responseObjectCityFrom.getString("cityName"));
-                        city.setBusStopName(responseObjectCityFrom.getString("busStopName"));
-                        rideResponse.setCityFrom(city);
-
-                        JSONObject responseObjectCityTo = responseObject.getJSONObject("cityTo");
+                        ride.setId(rideObject.getInt("id"));
+                        JSONObject cityFromObject = rideObject.getJSONObject("cityFrom");
+                        City cityFrom = new City();
+                        cityFrom.setId(cityFromObject.getInt("id"));
+                        cityFrom.setCityName(cityFromObject.getString("cityName"));
+                        cityFrom.setBusStopName(cityFromObject.getString("busStopName"));
+                        ride.setCityFrom(cityFrom);
+                        JSONObject cityToObject = rideObject.getJSONObject("cityTo");
                         City cityTo = new City();
-                        cityTo.setId(responseObjectCityTo.getInt("id"));
-                        cityTo.setCityName(responseObjectCityTo.getString("cityName"));
-                        cityTo.setBusStopName(responseObjectCityTo.getString("busStopName"));
-                        rideResponse.setCityTo(cityTo);
-
-                        listOfRides.add(rideResponse);
+                        cityTo.setId(cityToObject.getInt("id"));
+                        cityTo.setCityName(cityToObject.getString("cityName"));
+                        cityTo.setBusStopName(cityToObject.getString("busStopName"));
+                        ride.setCityTo(cityTo);
+                        ride.setPrice(rideObject.getDouble("price"));
+                        ride.setRideTime(Time.valueOf(rideObject.getString("rideTime")));
+                        listOfRides.add(ride);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

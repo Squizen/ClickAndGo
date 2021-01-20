@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.text.DateFormat;
 
 import breakthecode.com.clickandgo.R;
-import breakthecode.com.clickandgo.entity.RideResponse;
+import breakthecode.com.clickandgo.entity.Ride;
 import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class RideCardActivity extends AppCompatActivity {
@@ -22,7 +22,7 @@ public class RideCardActivity extends AppCompatActivity {
     private TextView rideCardRideCityFromName, rideCardRideCityFromBusStopName, rideCardRideCityFromBusStation,
             rideCardRideCityToName, rideCardRideCityToBusStopName, rideCardRideCityToBusStation, rideCardRideDate,
             rideCardRideTime, rideCardRidePrice;
-    private RideResponse rideResponse;
+    private Ride ride;
     private RideRequestParameters rideRequestParameters;
     private Button rideCardBuyTicketButton;
 
@@ -64,36 +64,36 @@ public class RideCardActivity extends AppCompatActivity {
 
         loadRideObject();
 
-        rideCardRideCityFromName.setText(rideResponse.getCityFrom().getCityName());
-        String[] splitedFromBusStopName = rideResponse.getCityFrom().getBusStopName().split("-");
+        rideCardRideCityFromName.setText(ride.getCityFrom().getCityName());
+        String[] splitedFromBusStopName = ride.getCityFrom().getBusStopName().split("-");
         if(splitedFromBusStopName.length == 2){
             rideCardRideCityFromBusStopName.setText(splitedFromBusStopName[0].trim());
             rideCardRideCityFromBusStation.setText(splitedFromBusStopName[1].trim());
         }
-        rideCardRideCityToName.setText(rideResponse.getCityTo().getCityName());
-        String[] splitedToBusStopName = rideResponse.getCityTo().getBusStopName().split("-");
+        rideCardRideCityToName.setText(ride.getCityTo().getCityName());
+        String[] splitedToBusStopName = ride.getCityTo().getBusStopName().split("-");
         if(splitedToBusStopName.length == 2){
             rideCardRideCityToBusStopName.setText(splitedToBusStopName[0].trim());
             rideCardRideCityToBusStation.setText(splitedToBusStopName[1].trim());
         }
-        int length = rideResponse.getRide().getRideTime().toString().length();
-        String time = rideResponse.getRide().getRideTime().toString().substring(0, length-3);
+        int length = ride.getRideTime().toString().length();
+        String time = ride.getRideTime().toString().substring(0, length-3);
         rideCardRideTime.setText(time);
 
         rideCardRideDate.setText(DateFormat.getDateInstance().format(rideRequestParameters.getDateOfRide().getTime()));
-        String price = String.format("%.2f", rideResponse.getRide().getPrice());
+        String price = String.format("%.2f", ride.getPrice());
         rideCardRidePrice.setText(price + " zł");
     }
 
     private void loadRideObject(){
-        rideResponse = (RideResponse) getIntent().getExtras().getSerializable("rideObject");
+        ride = (Ride) getIntent().getExtras().getSerializable("rideObject");
     }
     private void setOnClickListeners(){
         rideCardBuyTicketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RideCardActivity.this, TicketBuyingActivity.class);
-                intent.putExtra("rideObject", rideResponse);
+                intent.putExtra("rideObject", ride);
                 Pair<View,String> p1 = Pair.create((View)rideCardRideCityFromName, "ticketBuyingRideCityFromNameTN");
                 Pair<View,String> p2 = Pair.create((View)rideCardRideCityToName, "ticketBuyingRideCityToNameTN");
                 Pair<View,String> p3 = Pair.create((View)rideCardRideDate, "ticketBuyingRideCityRideDateTN");

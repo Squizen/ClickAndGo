@@ -1,14 +1,11 @@
 package breakthecode.com.clickandgo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,14 +20,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import breakthecode.com.clickandgo.R;
 import breakthecode.com.clickandgo.classes.AppSharedPreferencesHelper;
@@ -39,10 +34,8 @@ import breakthecode.com.clickandgo.classes.StringValidation;
 import breakthecode.com.clickandgo.classes.TicketNumberGenerator;
 import breakthecode.com.clickandgo.classes.TransactionDialog;
 import breakthecode.com.clickandgo.entity.Ride;
-import breakthecode.com.clickandgo.entity.RideResponse;
 import breakthecode.com.clickandgo.entity.Ticket;
 import breakthecode.com.clickandgo.entity.UserTicket;
-import breakthecode.com.clickandgo.recyclerviews.CitiesToRecViewAdapter;
 import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class TicketBuyingActivity extends AppCompatActivity {
@@ -52,7 +45,7 @@ public class TicketBuyingActivity extends AppCompatActivity {
     private TextView ticketBuingRideCityFromName, ticketBuingRideCityToName, ticketBuingRideCityRideDate,
             ticketBuingRideCityRideTime, ticketBuingRideCityRidePrice;
 
-    private RideResponse rideResponse;
+    private Ride ride;
     private RideRequestParameters rideRequestParameters;
 
     private Button ticketBuyingActivity_buyTicketButton;
@@ -115,16 +108,16 @@ public class TicketBuyingActivity extends AppCompatActivity {
     }
     private void initWidgetsData(){
         loadRideResponseObject();
-        if(rideResponse != null){
-            ticketBuingRideCityFromName.setText(rideResponse.getCityFrom().getCityName());
-            ticketBuingRideCityToName.setText(rideResponse.getCityTo().getCityName());
+        if(ride != null){
+            ticketBuingRideCityFromName.setText(ride.getCityFrom().getCityName());
+            ticketBuingRideCityToName.setText(ride.getCityTo().getCityName());
 
-            int length = rideResponse.getRide().getRideTime().toString().length();
-            String time = rideResponse.getRide().getRideTime().toString().substring(0, length-3);
+            int length = ride.getRideTime().toString().length();
+            String time = ride.getRideTime().toString().substring(0, length-3);
             ticketBuingRideCityRideTime.setText(time);
 
             ticketBuingRideCityRideDate.setText(DateFormat.getDateInstance().format(rideRequestParameters.getDateOfRide().getTime()));
-            String price = String.format("%.2f", rideResponse.getRide().getPrice());
+            String price = String.format("%.2f", ride.getPrice());
             ticketBuingRideCityRidePrice.setText(price + " zł");
         }
     }
@@ -161,24 +154,24 @@ public class TicketBuyingActivity extends AppCompatActivity {
                 if(isDataCorrect.contains(false)){
                     // TODO dont do anything
                 } else {
-                    buyTicket(rideResponse, userData);
+                    buyTicket(ride, userData);
                 }
             }
         });
     }
     private void loadRideResponseObject(){
-        rideResponse = (RideResponse) getIntent().getExtras().getSerializable("rideObject");
+        ride = (Ride) getIntent().getExtras().getSerializable("rideObject");
     }
 
-    private void buyTicket(RideResponse rideResponse, ArrayList<String> userData){
+    private void buyTicket(Ride ride, ArrayList<String> userData){
         Ticket ticket = new Ticket();
 
-        ticket.setIdRide(rideResponse.getRide().getId());
+        ticket.setIdRide(ride.getId());
         ticket.setTicketNumber(TicketNumberGenerator.generateTicket());
 
         Calendar calendar = Calendar.getInstance();
         ticket.setPurchaseDate(Date.valueOf(new java.sql.Date(calendar.getTimeInMillis()).toString()));
-        ticket.setPurchaseTime(Time.valueOf(rideResponse.getRide().getRideTime().toString()));
+        ticket.setPurchaseTime(Time.valueOf(ride.getRideTime().toString()));
 
         ticket.setRideDate(rideRequestParameters.getDateOfRide());
         ticket.setOwnerName(userData.get(0));
@@ -190,7 +183,7 @@ public class TicketBuyingActivity extends AppCompatActivity {
 
         ticket.setExpiringDate(newDate);
 
-        ticket.setExpiringTime(rideResponse.getRide().getRideTime());
+        ticket.setExpiringTime(ride.getRideTime());
 
         String jsonWithData = "{"+
                 "\"idRide\""+" : "+ticket.getIdRide()+","+
@@ -198,11 +191,11 @@ public class TicketBuyingActivity extends AppCompatActivity {
                 "\"purchaseDate\""+" : "+"\""+ticket.getPurchaseDate()+"\", "+
                 "\"purchaseTime\""+" : "+"\""+ticket.getPurchaseTime()+"\", "+
                 "\"rideDate\""+" : "+"\""+ticket.getRideDate()+"\", "+
-                "\"ownerName\""+" : "+"\""+ticket.getOwnerName()+"\", "+
-                "\"ownerSurname\""+" : "+"\""+ticket.getOwnerSurname()+"\", "+
-                "\"ownerEmail\""+ " : "+"\""+ticket.getOwnerEmail()+"\", "+
                 "\"expiringDate\""+" : "+"\""+ticket.getExpiringDate()+"\", "+
-                "\"expiringTime\""+" : "+"\""+ticket.getExpiringTime()+"\"}";
+                "\"expiringTime\""+" : "+"\""+ticket.getExpiringTime()+"\", "+
+                "\"passenger_name\""+" : "+"\""+ticket.getOwnerName()+"\", "+
+                "\"passenger_surname\""+" : "+"\""+ticket.getOwnerSurname()+"\", "+
+                "\"passenger_email\""+" : "+"\""+ticket.getOwnerEmail()+"\"}";
 
         ticket.getIdRide();
         Log.d(TAG, "buyTicket: " + jsonWithData);
@@ -214,7 +207,6 @@ public class TicketBuyingActivity extends AppCompatActivity {
     private void addTicketToDatabase(String jsonWithData, final Ticket ticket){
         final String saveData = jsonWithData;
         String serverURL = SERVER_URL + "/api/tickets";
-
         transactionDialog.startTransactionDialog();
         onEmailSendListener = new OnEmailSendListener() {
             @Override
@@ -222,7 +214,6 @@ public class TicketBuyingActivity extends AppCompatActivity {
                 transactionDialog.dismissDialog();
             }
         };
-
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest stringRequest = new StringRequest(Request.Method.POST, serverURL, new Response.Listener<String>() {
             @Override

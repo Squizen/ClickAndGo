@@ -41,40 +41,26 @@ import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class MainPanelActivity extends AppCompatActivity
         implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+
     private static final String TAG = "myLogs MainPanel";
-
-
     private CardView mainPanelChooseFromPanel, mainPanelChooseToPanel, mainPanelChooseWhenPanel,
                         mainPanelChooseTimePanel, mainPanelActivityCardWithTicket, mainpanelActivityCardWithoutTicket;
     private TextView mainPanelChooseFromTxt, mainPanelChooseToTxt, mainPanelChooseWhenTxt, mainPanelChooseTimeTxt, mainPanelActivity_LastTicketRideCitiesNamesTxt,
             mainPanelActivity_LastTicketRideDateTxt, mainPanelActivity_LastTicketRideTimeTxt, mainPanelActivity_clickToIncreaseSizeTxt;
-
     private boolean isCityFromPicked, isCityToPicked;
-
     private AppSharedPreferencesHelper sharedPrefs;
-
     private Calendar date, time;
     private boolean dateIsPicked = false;
-
     private Button mainPanelSendRequest;
-
     private RideRequestParameters rideRequestParameters;
-
     private List<City> listOfCities;
     private ArrayList<UserTicket> listOfUsersTickets;
-
-
     private ImageView mainPanelActivity_QRIcon, mainPanelLogo;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_panel);
-
-        Log.d(TAG, "onCreate: started ");
 
         settings();
         loadData();

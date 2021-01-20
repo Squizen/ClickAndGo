@@ -36,13 +36,9 @@ import breakthecode.com.clickandgo.recyclerviews.CitiesToRecViewAdapter;
 import breakthecode.com.clickandgo.resthelpers.RideRequestParameters;
 
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "myLogs MainAct";
-    private static final String SERVER_URL = "http://ssh-vps.nazwa.pl:8084";
-
-    private AppSharedPreferencesHelper sharedPrefs;
     private RideRequestParameters rideRequestParameters;
-
-    private List<City> listOfCities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +46,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         settings();
-        loadData();
-        resetData();
         setUpRideRequestParameters();
         executeAfterSomeTime();
     }
+
     private void settings(){
         getSupportActionBar().hide();
-    }
-
-    private void loadData(){
-        sharedPrefs = new AppSharedPreferencesHelper(this, "Shared_Preferences");
     }
 
     private void executeAfterSomeTime(){
@@ -74,12 +65,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }, delay);
     }
-    private void resetData(){
 
-    }
     private void setUpRideRequestParameters(){
         rideRequestParameters = RideRequestParameters.getInstance();
-
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);

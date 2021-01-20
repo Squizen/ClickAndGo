@@ -127,7 +127,6 @@ public class ChooseCityFromActivity extends AppCompatActivity implements CitiesF
     }
 
     public void requestListOfAllCities(){
-        Log.d(TAG, "requestListOfAllCities: ");
         String connection_address;
         if(!rideRequestParameters.isCityToPicked()){
             connection_address = SERVER_URL + "/api/cities/from";
@@ -136,18 +135,17 @@ public class ChooseCityFromActivity extends AppCompatActivity implements CitiesF
         }
         listOfCities = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(this);
-        Log.d(TAG, "requestListOfAllCities: SERVER URL - " + SERVER_URL);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, connection_address, null, new Response.Listener<JSONArray>() {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, connection_address,
+                null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.d(TAG, "onResponse: ");
                 for (int i = 0; i < response.length(); i++) {
                     try {
-                        JSONObject songObject = response.getJSONObject(i);
+                        JSONObject cityObject = response.getJSONObject(i);
                         City city = new City();
-                        city.setId(songObject.getInt("id"));
-                        city.setCityName(songObject.getString("cityName"));
-                        city.setBusStopName(songObject.getString("busStopName"));
+                        city.setId(cityObject.getInt("id"));
+                        city.setCityName(cityObject.getString("cityName"));
+                        city.setBusStopName(cityObject.getString("busStopName"));
 
                         listOfCities.add(city);
 

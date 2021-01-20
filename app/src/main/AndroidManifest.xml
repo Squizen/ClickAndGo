@@ -7,14 +7,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/logo_blue"
+        android:label="ClickAndGo"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.MyTicketsActivity"></activity>
-        <activity android:name=".activities.TicketCardActivity" />
         <activity android:name=".activities.TicketBuyingActivity" />
         <activity android:name=".activities.RideCardActivity" />
         <activity android:name=".activities.ChooseRideActivity" />

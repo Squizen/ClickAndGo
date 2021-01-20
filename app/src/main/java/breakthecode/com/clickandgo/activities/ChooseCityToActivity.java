@@ -141,11 +141,11 @@ public class ChooseCityToActivity extends AppCompatActivity implements CitiesToR
                                 Log.d(TAG, "onResponse: ");
                                 for (int i = 0; i < response.length(); i++) {
                                     try {
-                                        JSONObject songObject = response.getJSONObject(i);
+                                        JSONObject cityObject = response.getJSONObject(i);
                                         City city = new City();
-                                        city.setId(songObject.getInt("id"));
-                                        city.setCityName(songObject.getString("cityName"));
-                                        city.setBusStopName(songObject.getString("busStopName"));
+                                        city.setId(cityObject.getInt("id"));
+                                        city.setCityName(cityObject.getString("cityName"));
+                                        city.setBusStopName(cityObject.getString("busStopName"));
 
                                         listOfCities.add(city);
 
