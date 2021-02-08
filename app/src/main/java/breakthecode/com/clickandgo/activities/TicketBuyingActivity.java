@@ -215,7 +215,8 @@ public class TicketBuyingActivity extends AppCompatActivity {
             }
         };
         requestQueue = Volley.newRequestQueue(getApplicationContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverURL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, serverURL,
+                new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 UserTicket userTicket = new UserTicket();
@@ -247,7 +248,6 @@ public class TicketBuyingActivity extends AppCompatActivity {
             public String getBodyContentType() {
                 return "application/json; charset=utf-8";
             }
-
             @Override
             public byte[] getBody() throws AuthFailureError {
                 return saveData == null ? null : saveData.getBytes(StandardCharsets.UTF_8);

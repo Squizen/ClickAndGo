@@ -7,9 +7,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo_blue"
+        android:icon="@drawable/ikonka"
         android:label="ClickAndGo"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">

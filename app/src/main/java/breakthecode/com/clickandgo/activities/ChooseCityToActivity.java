@@ -123,19 +123,19 @@ public class ChooseCityToActivity extends AppCompatActivity implements CitiesToR
             });
         }
     }
-
     public void requestListOfAllCities(){
-        Log.d(TAG, "requestListOfAllCities: ");
         String connection_address;
         if(!rideRequestParameters.isCityFromPicked()){
             connection_address = SERVER_URL + "/api/cities/to";
         } else {
-            connection_address = SERVER_URL + "/api/cities/to/from/" + rideRequestParameters.getCityFrom().getId()+"";
+            connection_address = SERVER_URL + "/api/cities/to/from/"
+                    + rideRequestParameters.getCityFrom().getId()+"";
         }
         listOfCities = new ArrayList<>();
         RequestQueue queue = Volley.newRequestQueue(this);
-        Log.d(TAG, "requestListOfAllCities: SERVER URL - " + SERVER_URL);
-                        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, connection_address, null, new Response.Listener<JSONArray>() {
+                        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
+                                connection_address, null,
+                                new Response.Listener<JSONArray>() {
                             @Override
                             public void onResponse(JSONArray response) {
                                 Log.d(TAG, "onResponse: ");
@@ -145,14 +145,13 @@ public class ChooseCityToActivity extends AppCompatActivity implements CitiesToR
                                         City city = new City();
                                         city.setId(cityObject.getInt("id"));
                                         city.setCityName(cityObject.getString("cityName"));
-                                        city.setBusStopName(cityObject.getString("busStopName"));
-
+                                        city.setBusStopName(cityObject
+                                                .getString("busStopName"));
                                         listOfCities.add(city);
-
                                     } catch (JSONException e) {
                                         e.printStackTrace();
-                    }
-                }
+                                    }
+                                }
                 loadingDialog.startLoadingDialog();
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -160,9 +159,11 @@ public class ChooseCityToActivity extends AppCompatActivity implements CitiesToR
                     public void run() {
                         loadingDialog.dismissDialog();
                         sharedPrefs.setListOfCitiesFromRequest(listOfCities);
-                        CitiesToRecViewAdapter adapter = new CitiesToRecViewAdapter(getApplicationContext());
+                        CitiesToRecViewAdapter adapter =
+                                new CitiesToRecViewAdapter(getApplicationContext());
                         cityRecView.setAdapter(adapter);
-                        cityRecView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        cityRecView.setLayoutManager
+                                (new LinearLayoutManager(getApplicationContext()));
                         cityRecView.setItemAnimator(new DefaultItemAnimator());
                         layoutAnimation(cityRecView);
                         adapter.setListOfCities(listOfCities);
@@ -171,18 +172,16 @@ public class ChooseCityToActivity extends AppCompatActivity implements CitiesToR
                     }
                 }, 1500);
             }
-
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: " + error.networkResponse.statusCode);
                 error.printStackTrace();
-
-
             }
         });
         queue.add(jsonArrayRequest);
     }
+
     private void layoutAnimation(RecyclerView recView){
         Log.d(TAG, "layoutAnimation: ");
         Context context = recView.getContext();

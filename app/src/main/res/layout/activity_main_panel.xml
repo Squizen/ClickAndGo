@@ -13,6 +13,14 @@
         android:layout_height="270dp">
 
         <ImageView
+            android:id="@+id/mainPanelActivity_ticketsIcon"
+            android:background="@drawable/tickets"
+            android:layout_margin="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
+        <ImageView
             android:id="@+id/mainPanelLogo"
             android:layout_width="140dp"
             android:layout_height="60dp"

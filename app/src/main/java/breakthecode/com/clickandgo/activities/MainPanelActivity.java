@@ -55,7 +55,7 @@ public class MainPanelActivity extends AppCompatActivity
     private RideRequestParameters rideRequestParameters;
     private List<City> listOfCities;
     private ArrayList<UserTicket> listOfUsersTickets;
-    private ImageView mainPanelActivity_QRIcon, mainPanelLogo;
+    private ImageView mainPanelActivity_QRIcon, mainPanelLogo, mainPanelActivity_ticketsIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +96,7 @@ public class MainPanelActivity extends AppCompatActivity
 
         mainPanelActivity_QRIcon = findViewById(R.id.mainPanelActivity_QRIcon);
         mainPanelLogo = (ImageView) findViewById(R.id.mainPanelLogo);
+        mainPanelActivity_ticketsIcon = (ImageView) findViewById(R.id.mainPanelActivity_ticketsIcon);
     }
 
     private void setOnClickListeners(){
@@ -146,7 +147,8 @@ public class MainPanelActivity extends AppCompatActivity
                 showTicketDialog();
             }
         });
-        mainPanelLogo.setOnClickListener(new View.OnClickListener() {
+
+        mainPanelActivity_ticketsIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainPanelActivity.this, MyTicketsActivity.class);
@@ -267,7 +269,8 @@ public class MainPanelActivity extends AppCompatActivity
     private void generateQRcode(String ticketNumber){
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
-            BitMatrix bitMatrix = qrCodeWriter.encode(ticketNumber, BarcodeFormat.QR_CODE, 100, 100);
+            BitMatrix bitMatrix = qrCodeWriter.encode(ticketNumber, BarcodeFormat.QR_CODE,
+                    100, 100);
             Bitmap bitmap = Bitmap.createBitmap(100,100, Bitmap.Config.RGB_565);
             for (int i = 0; i < 100; i++) {
                 for (int j = 0; j < 100; j++){
